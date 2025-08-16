@@ -16,6 +16,7 @@ export default async function handler(req, res) {
     console.error('Geolocation lookup failed:', error);
   }
 
+  console.log('GeoData:', geoData);
   console.log(`IP: ${ip} | Country: ${country} | City: ${city}`);
   res.status(204).end();
 }
