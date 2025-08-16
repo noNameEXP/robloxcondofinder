@@ -4,24 +4,18 @@ export default async function handler(req, res) {
     req.connection?.remoteAddress ||
     'unknown';
 
-  let location = {
-    city: 'unknown',
-    country: 'unknown',
-  };
+  let country = 'unknown';
+  let city = 'unknown';
 
   try {
     const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
     const geoData = await geoRes.json();
-
-    location.city = geoData.city || 'unknown';
-    location.country = geoData.country_name || 'unknown';
+    country = geoData.country_name || 'unknown';
+    city = geoData.city || 'unknown';
   } catch (error) {
     console.error('Geolocation lookup failed:', error);
   }
 
-  console.log(`Visitor IP: ${ip}`);
-  console.log(`City: ${location.city}`);
-  console.log(`Country: ${location.country}`);
-
+  console.log(`IP: ${ip} | Country: ${country} | City: ${city}`);
   res.status(204).end();
 }
